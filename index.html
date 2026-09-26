@@ -6,9 +6,9 @@
     <title>Sylphiette's cmds pack</title>
     <style>
         :root {
-            /* Light theme - 5% darker background for reduced eye fatigue */
-            --bg-color: #e4ebe6; 
-            --card-bg: #ffffff;
+            /* Light theme - Clean white background */
+            --bg-color: #ffffff; 
+            --card-bg: rgba(255, 255, 255, 0.92);
             --border-color: #cbd5e1;
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -20,12 +20,13 @@
             --badge-fun-bg: #fef3c7;
             --badge-fun-text: #b45309;
             --modal-overlay: rgba(15, 23, 42, 0.55);
+            --leaf-opacity: 0.08;
         }
 
         [data-theme="dark"] {
             /* Dark theme colors */
             --bg-color: #031e0f;
-            --card-bg: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.92);
             --border-color: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
@@ -37,6 +38,7 @@
             --badge-fun-bg: #78350f;
             --badge-fun-text: #fef3c7;
             --modal-overlay: rgba(0, 0, 0, 0.75);
+            --leaf-opacity: 0.12;
         }
 
         * {
@@ -46,7 +48,6 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -56,16 +57,35 @@
             zoom: 110%;
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Large SVG Leaf background watermark */
+        .bg-leaf {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            width: 85vw;
+            max-width: 900px;
+            height: auto;
+            pointer-events: none;
+            z-index: 0;
+            opacity: var(--leaf-opacity);
+            transition: opacity 0.3s ease;
         }
 
         .container {
             width: 100%;
             max-width: 920px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header Box */
         .header-box {
             background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 14px 20px;
@@ -84,7 +104,7 @@
         }
 
         .theme-toggle-btn {
-            background-color: var(--bg-color);
+            background-color: var(--control-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 8px 14px;
@@ -132,7 +152,7 @@
         }
 
         .nav-btn {
-            background-color: var(--bg-color);
+            background-color: var(--control-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
             padding: 8px 18px;
@@ -157,7 +177,7 @@
         }
 
         .fun-toggle-btn {
-            background-color: var(--control-bg);
+            background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 10px 16px;
@@ -183,7 +203,8 @@
 
         .search-input {
             flex: 1;
-            background-color: var(--control-bg);
+            background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 10px 16px;
@@ -206,6 +227,7 @@
 
         .card {
             background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 18px 22px;
@@ -267,7 +289,7 @@
         }
 
         .copy-btn {
-            background-color: var(--bg-color);
+            background-color: var(--control-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
             padding: 6px 14px;
@@ -358,6 +380,7 @@
 
         .modal-box {
             background: var(--card-bg);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 24px;
@@ -441,7 +464,7 @@
         }
 
         .page-btn {
-            background-color: var(--bg-color);
+            background-color: var(--control-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
             padding: 6px 16px;
@@ -473,6 +496,7 @@
             bottom: 20px;
             left: 20px;
             background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 8px 12px;
@@ -517,6 +541,11 @@
 </head>
 <body>
 
+<!-- SVG Leaf Watermark Background -->
+<svg class="bg-leaf" viewBox="0 0 512 512" fill="#15803d" xmlns="http://www.w3.org/2000/svg">
+    <path d="M492.3 22.3C486.2 16.2 477.5 13.3 468.9 14.5C369.3 28.5 242.3 88.6 155.6 175.3C80.3 250.6 30.7 353.4 15.5 450.4C14.1 459.3 17.5 468.2 24.3 475C31.1 481.8 40 485.2 48.9 483.8C145.9 468.6 248.7 419 324 343.7C410.7 257 466.8 130 480.8 30.4C482 21.8 479.1 13.1 473 7C473 7 492.3 22.3 492.3 22.3ZM296.8 316.5C232.8 380.5 142.3 423.6 57 438.4C69.3 359.8 112 275.9 178.2 209.7C252.3 135.6 362 82.5 448.9 69C435.4 155.9 382.3 265.6 308.2 339.7C304.4 332 296.8 316.5 296.8 316.5ZM191.1 320.9C216.5 295.5 257.5 295.5 282.9 320.9C308.3 346.3 308.3 387.3 282.9 412.7C257.5 438.1 216.5 438.1 191.1 412.7C165.7 387.3 165.7 346.3 191.1 320.9Z"/>
+</svg>
+
 <div class="container">
     <!-- Top Header Bar -->
     <div class="header-box">
@@ -530,8 +559,8 @@
             <span class="username">Sylphiette's cmds pack</span>
         </div>
         <div class="nav-buttons">
-            <button class="nav-btn active" onclick="switchTab('cmds', this)">CMDs</button>
-            <button class="nav-btn" onclick="switchTab('ps', this)">PS</button>
+            <button class="nav-btn active" id="btn-ps" onclick="switchTab('ps', this)">PS</button>
+            <button class="nav-btn" id="btn-cmds" onclick="switchTab('cmds', this)">CMDs</button>
         </div>
     </div>
 
@@ -543,8 +572,142 @@
         <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search commands..." onkeyup="filterCommands()">
     </div>
 
+    <!-- TAB PS (PowerShell) - DEFAULT ACTIVE TAB -->
+    <div id="ps" class="section active">
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Universal Activation Script (Massgrave MAS)" data-vi="Kích Hoạt Windows & Office (Massgrave MAS)">Universal Activation Script (Massgrave MAS)</span>
+            </div>
+            <div class="code-wrapper">
+                <code>irm https://get.activated.win | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Official script to activate Windows and Microsoft Office permanently." data-vi="Script chính thức để kích hoạt bản quyền Windows và Microsoft Office vĩnh viễn.">Official script to activate Windows and Microsoft Office permanently.</span>
+                <div class="action-btns">
+                    <button class="guide-btn" onclick="openGuide()">📖 <span data-en="Guide" data-vi="Hướng dẫn">Guide</span></button>
+                    <a href="https://massgrave.dev/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Block Spotify Desktop Ads (SpotX)" data-vi="Chặn Quảng Cáo Spotify PC (SpotX)">Block Spotify Desktop Ads (SpotX)</span>
+            </div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://raw.githubusercontent.com/SpotX-Official/SpotX/main/Install.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Automatic adblocker and cleanup patch for Spotify Windows client." data-vi="Tự động chặn sạch quảng cáo và dọn dẹp ứng dụng Spotify trên Windows.">Automatic adblocker and cleanup patch for Spotify Windows client.</span>
+                <div class="action-btns">
+                    <a href="https://github.com/SpotX-Official/SpotX" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Reset & Fix Windows Update Components" data-vi="Sửa Lỗi Windows Update (Reset WU)">Reset & Fix Windows Update Components</span>
+            </div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://raw.githubusercontent.com/wureset/script/main/wureset.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Restores broken update services and cleans stuck update cache." data-vi="Khôi phục các dịch vụ bị lỗi và làm sạch bộ nhớ đệm cập nhật bị kẹt.">Restores broken update services and cleans stuck update cache.</span>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Uninstall Edge & OneDrive Bloatware" data-vi="Gỡ Bỏ Edge & OneDrive">Uninstall Edge & OneDrive Bloatware</span>
+            </div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://raw.githubusercontent.com/rcmaehl/MSEdgeRedirect/main/assets/uninstall.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Cleanly purges unwanted Microsoft Edge remnants from Windows." data-vi="Dọn dẹp sạch sẽ trình duyệt Microsoft Edge không mong muốn khỏi hệ thống.">Cleanly purges unwanted Microsoft Edge remnants from Windows.</span>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Install Scoop Package Manager" data-vi="Cài Đặt Bộ Quản Lý Gói Scoop">Install Scoop Package Manager</span>
+            </div>
+            <div class="code-wrapper">
+                <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; iwr -useb get.scoop.sh | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Lightweight command-line app installer without requiring Admin elevation." data-vi="Trình cài đặt ứng dụng bằng dòng lệnh cực nhẹ không cần quyền Admin.">Lightweight command-line app installer without requiring Admin elevation.</span>
+                <div class="action-btns">
+                    <a href="https://scoop.sh/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Bypass PowerShell Execution Policy" data-vi="Mở Khóa Quyền Chạy Script PowerShell">Bypass PowerShell Execution Policy</span>
+            </div>
+            <div class="code-wrapper">
+                <code>Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Permits execution of custom local automation scripts without restriction errors." data-vi="Cho phép chạy các file script PowerShell tự tạo trên máy mà không bị chặn.">Permits execution of custom local automation scripts without restriction errors.</span>
+            </div>
+        </div>
+
+        <!-- Fun Mode PS Commands -->
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="ASCII Rickroll Animation Stream" data-vi="Stream Rickroll Bằng Ký Tự ASCII">ASCII Rickroll Animation Stream</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/keroserene/rickroll/master/rickroll.ps1')</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Plays full animated Rick Astley video directly inside PowerShell terminal!" data-vi="Phát đoạn phim Rick Astley huyền thoại bằng ký tự chuyển động ngay trong PowerShell!">Plays full animated Rick Astley video directly inside PowerShell terminal!</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Play Star Wars Theme Music with Motherboard Beeps" data-vi="Phát Nhạc Star Wars Bằng Tiếng Beep">Play Star Wars Theme Music with Motherboard Beeps</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>[console]::beep(440,500); [console]::beep(440,500); [console]::beep(440,500); [console]::beep(349,350); [console]::beep(523,150); [console]::beep(440,500)</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Uses hardware speaker frequencies to compose the Imperial March rhythm." data-vi="Sử dụng tần số loa phần cứng của máy tính để đánh giai điệu Star Wars.">Uses hardware speaker frequencies to compose the Imperial March rhythm.</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="PowerShell High-Speed Matrix Digital Rain" data-vi="Mưa Số Ma Trận Tốc Độ Cao PowerShell">PowerShell High-Speed Matrix Digital Rain</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>$h=(Get-Host).UI.RawUI;$h.ForegroundColor='Green';while(1){Write-Host -NoNewline ([char](Get-Random -Min 33 -Max 126))}</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Generates smooth infinite stream of matrix code symbols." data-vi="Tạo dòng chảy các ký tự mã hóa xanh lá mượt mà không tận.">Generates smooth infinite stream of matrix code symbols.</span>
+            </div>
+        </div>
+    </div>
+
     <!-- TAB CMDs -->
-    <div id="cmds" class="section active">
+    <div id="cmds" class="section">
         <div class="card useful-card">
             <div class="card-header-line">
                 <span class="card-title" data-en="ChrisTitus Tech Windows Utility" data-vi="Công Cụ Tối Ưu Windows ChrisTitus">ChrisTitus Tech Windows Utility</span>
@@ -680,140 +843,6 @@
             </div>
             <div class="note-bar">
                 <span class="note-text" data-en="Rapidly flashes CMD text colors to turn terminal into a party disco show." data-vi="Chớp nháy màu chữ CMD liên tục biến màn hình thành vũ trường ngập sắc màu.">Rapidly flashes CMD text colors to turn terminal into a party disco show.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB PS (PowerShell) -->
-    <div id="ps" class="section">
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Universal Activation Script (Massgrave MAS)" data-vi="Kích Hoạt Windows & Office (Massgrave MAS)">Universal Activation Script (Massgrave MAS)</span>
-            </div>
-            <div class="code-wrapper">
-                <code>irm https://get.activated.win | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Official script to activate Windows and Microsoft Office permanently." data-vi="Script chính thức để kích hoạt bản quyền Windows và Microsoft Office vĩnh viễn.">Official script to activate Windows and Microsoft Office permanently.</span>
-                <div class="action-btns">
-                    <button class="guide-btn" onclick="openGuide()">📖 <span data-en="Guide" data-vi="Hướng dẫn">Guide</span></button>
-                    <a href="https://massgrave.dev/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Block Spotify Desktop Ads (SpotX)" data-vi="Chặn Quảng Cáo Spotify PC (SpotX)">Block Spotify Desktop Ads (SpotX)</span>
-            </div>
-            <div class="code-wrapper">
-                <code>iwr -useb https://raw.githubusercontent.com/SpotX-Official/SpotX/main/Install.ps1 | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Automatic adblocker and cleanup patch for Spotify Windows client." data-vi="Tự động chặn sạch quảng cáo và dọn dẹp ứng dụng Spotify trên Windows.">Automatic adblocker and cleanup patch for Spotify Windows client.</span>
-                <div class="action-btns">
-                    <a href="https://github.com/SpotX-Official/SpotX" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Reset & Fix Windows Update Components" data-vi="Sửa Lỗi Windows Update (Reset WU)">Reset & Fix Windows Update Components</span>
-            </div>
-            <div class="code-wrapper">
-                <code>iwr -useb https://raw.githubusercontent.com/wureset/script/main/wureset.ps1 | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Restores broken update services and cleans stuck update cache." data-vi="Khôi phục các dịch vụ bị lỗi và làm sạch bộ nhớ đệm cập nhật bị kẹt.">Restores broken update services and cleans stuck update cache.</span>
-            </div>
-        </div>
-
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Uninstall Edge & OneDrive Bloatware" data-vi="Gỡ Bỏ Edge & OneDrive">Uninstall Edge & OneDrive Bloatware</span>
-            </div>
-            <div class="code-wrapper">
-                <code>iwr -useb https://raw.githubusercontent.com/rcmaehl/MSEdgeRedirect/main/assets/uninstall.ps1 | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Cleanly purges unwanted Microsoft Edge remnants from Windows." data-vi="Dọn dẹp sạch sẽ trình duyệt Microsoft Edge không mong muốn khỏi hệ thống.">Cleanly purges unwanted Microsoft Edge remnants from Windows.</span>
-            </div>
-        </div>
-
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Install Scoop Package Manager" data-vi="Cài Đặt Bộ Quản Lý Gói Scoop">Install Scoop Package Manager</span>
-            </div>
-            <div class="code-wrapper">
-                <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; iwr -useb get.scoop.sh | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Lightweight command-line app installer without requiring Admin elevation." data-vi="Trình cài đặt ứng dụng bằng dòng lệnh cực nhẹ không cần quyền Admin.">Lightweight command-line app installer without requiring Admin elevation.</span>
-                <div class="action-btns">
-                    <a href="https://scoop.sh/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="card useful-card">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Bypass PowerShell Execution Policy" data-vi="Mở Khóa Quyền Chạy Script PowerShell">Bypass PowerShell Execution Policy</span>
-            </div>
-            <div class="code-wrapper">
-                <code>Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Permits execution of custom local automation scripts without restriction errors." data-vi="Cho phép chạy các file script PowerShell tự tạo trên máy mà không bị chặn.">Permits execution of custom local automation scripts without restriction errors.</span>
-            </div>
-        </div>
-
-        <!-- Fun Mode PS Commands -->
-        <div class="card fun-card" style="display: none;">
-            <div class="card-header-line">
-                <span class="card-title" data-en="ASCII Rickroll Animation Stream" data-vi="Stream Rickroll Bằng Ký Tự ASCII">ASCII Rickroll Animation Stream</span>
-                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
-            </div>
-            <div class="code-wrapper">
-                <code>iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/keroserene/rickroll/master/rickroll.ps1')</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Plays full animated Rick Astley video directly inside PowerShell terminal!" data-vi="Phát đoạn phim Rick Astley huyền thoại bằng ký tự chuyển động ngay trong PowerShell!">Plays full animated Rick Astley video directly inside PowerShell terminal!</span>
-            </div>
-        </div>
-
-        <div class="card fun-card" style="display: none;">
-            <div class="card-header-line">
-                <span class="card-title" data-en="Play Star Wars Theme Music with Motherboard Beeps" data-vi="Phát Nhạc Star Wars Bằng Tiếng Beep">Play Star Wars Theme Music with Motherboard Beeps</span>
-                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
-            </div>
-            <div class="code-wrapper">
-                <code>[console]::beep(440,500); [console]::beep(440,500); [console]::beep(440,500); [console]::beep(349,350); [console]::beep(523,150); [console]::beep(440,500)</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Uses hardware speaker frequencies to compose the Imperial March rhythm." data-vi="Sử dụng tần số loa phần cứng của máy tính để đánh giai điệu Star Wars.">Uses hardware speaker frequencies to compose the Imperial March rhythm.</span>
-            </div>
-        </div>
-
-        <div class="card fun-card" style="display: none;">
-            <div class="card-header-line">
-                <span class="card-title" data-en="PowerShell High-Speed Matrix Digital Rain" data-vi="Mưa Số Ma Trận Tốc Độ Cao PowerShell">PowerShell High-Speed Matrix Digital Rain</span>
-                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
-            </div>
-            <div class="code-wrapper">
-                <code>$h=(Get-Host).UI.RawUI;$h.ForegroundColor='Green';while(1){Write-Host -NoNewline ([char](Get-Random -Min 33 -Max 126))}</code>
-                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span class="note-text" data-en="Generates smooth infinite stream of matrix code symbols." data-vi="Tạo dòng chảy các ký tự mã hóa xanh lá mượt mà không tận.">Generates smooth infinite stream of matrix code symbols.</span>
             </div>
         </div>
     </div>
