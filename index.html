@@ -18,10 +18,8 @@
 
         body {
             background-color: var(--bg-color);
-            /* Background họa tiết SVG lá cây & lưới mờ */
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(21, 128, 61, 0.12) 0%, transparent 60%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            /* Họa tiết SVG tĩnh, không có animation chuyển màu -> Siêu nhẹ */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
@@ -86,7 +84,6 @@
             font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s;
         }
         .nav-btn.active, .nav-btn:hover {
             background-color: var(--accent) !important;
@@ -108,7 +105,6 @@
             padding: 18px 22px;
             margin-bottom: 14px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-            transition: border-color 0.2s;
         }
         .card:hover {
             border-color: var(--accent);
@@ -145,7 +141,6 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
-            transition: all 0.2s;
             white-space: nowrap;
             margin-left: 12px;
         }
@@ -161,51 +156,76 @@
             color: var(--text-muted);
             margin-top: 6px;
         }
-
-        /* Tooltip Tutorial thuần CSS - Cực nhẹ không giật CPU */
-        .tooltip-container {
-            position: relative;
-            display: inline-block;
-        }
-        .tutorial-badge {
+        .tutorial-btn {
             color: #ea580c;
             background-color: #ffedd5;
             padding: 3px 10px;
             border-radius: 6px;
             font-weight: 700;
             font-size: 12px;
-            cursor: help;
+            cursor: pointer;
         }
-        .tooltip-box {
-            visibility: hidden;
-            opacity: 0;
-            width: 260px;
-            background-color: #0f172a;
-            color: #fff;
-            text-align: left;
-            border-radius: 8px;
-            padding: 10px 14px;
-            position: absolute;
-            z-index: 10;
-            bottom: 125%;
-            right: 0;
-            font-size: 12px;
-            line-height: 1.5;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: opacity 0.2s, visibility 0.2s;
+        .tutorial-btn:hover {
+            background-color: #ea580c;
+            color: #ffffff;
         }
-        .tooltip-box::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            right: 15px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #0f172a transparent transparent transparent;
+
+        /* Modal Popup với hiệu ứng Trượt Từ Trên Xuống (Slide Down) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
-        .tooltip-container:hover .tooltip-box {
-            visibility: visible;
-            opacity: 1;
+        .modal-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            animation: slideDown 0.2s ease-out forwards;
+        }
+        .modal-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .tutorial-list {
+            padding-left: 18px;
+            margin: 0;
+            font-size: 13.5px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        .tutorial-list li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -234,12 +254,6 @@
             </div>
             <div class="note-bar">
                 <span>Note: Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
-                <div class="tooltip-container">
-                    <span class="tutorial-badge">Tutorial</span>
-                    <div class="tooltip-box">
-                        <b>Cách dùng:</b> Mở PowerShell quyền Admin -> Dán lệnh -> Bấm Enter. Chọn tab Tweaks để dọn rác Win.
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -250,13 +264,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Bring back full legacy context menu in Windows 11.</span>
-                <div class="tooltip-container">
-                    <span class="tutorial-badge">Tutorial</span>
-                    <div class="tooltip-box">
-                        Chạy lệnh xong cần Restart lại <b>Windows Explorer</b> trong Task Manager để có hiệu lực.
-                    </div>
-                </div>
+                <span>Note: Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
             </div>
         </div>
 
@@ -304,14 +312,7 @@
             </div>
             <div class="note-bar">
                 <span>Note: Run directly in PowerShell to activate Windows and Office.</span>
-                <div class="tooltip-container">
-                    <span class="tutorial-badge">Tutorial</span>
-                    <div class="tooltip-box">
-                        <b>1: HWID</b> (Active Win 10/11 vĩnh viễn)<br>
-                        <b>2: Ohook</b> (Active Office vĩnh viễn)<br>
-                        <b>3: KMS38</b> (Active Win Server tới 2038)
-                    </div>
-                </div>
+                <span class="tutorial-btn" onclick="openTutorial()">Tutorial</span>
             </div>
         </div>
 
@@ -323,12 +324,6 @@
             </div>
             <div class="note-bar">
                 <span>Note: Automatic adblocker and cleanup patch for Spotify Desktop app.</span>
-                <div class="tooltip-container">
-                    <span class="tutorial-badge">Tutorial</span>
-                    <div class="tooltip-box">
-                        Tắt hẳn ứng dụng Spotify trước khi dán lệnh chạy. Tự động chặn banner & QC âm thanh.
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -367,6 +362,22 @@
     </div>
 </div>
 
+<!-- Modal Popup Tutorial Trượt Từ Trên Xuống -->
+<div id="tutorialModal" class="modal-overlay" onclick="closeTutorial(event)">
+    <div class="modal-box">
+        <div class="modal-title">
+            <span>MAS Activation Tutorial</span>
+            <button class="close-btn" onclick="toggleModal(false)">✕</button>
+        </div>
+        <ol class="tutorial-list">
+            <li><b>HWID:</b> Bấm phím 1 để kích hoạt bản quyền kỹ thuật số vĩnh viễn cho Windows 10/11 (Gắn liền với Mainboard).</li>
+            <li><b>Ohook:</b> Bấm phím 2 để kích hoạt vĩnh viễn Microsoft Office (Office 2016-2024 / M365).</li>
+            <li><b>KMS38:</b> Bấm phím 3 để kích hoạt Windows Server / Enterprise tới năm 2038.</li>
+            <li><b>Online KMS:</b> Bấm phím 4 để kích hoạt tạm thời 180 ngày cho các bản Win/Office cũ.</li>
+        </ol>
+    </div>
+</div>
+
 <script>
     function switchTab(tabId, btn) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
@@ -388,6 +399,20 @@
                 btn.style.color = "#0f172a";
             }, 1500);
         });
+    }
+
+    function openTutorial() {
+        document.getElementById('tutorialModal').style.display = 'flex';
+    }
+
+    function toggleModal(show) {
+        document.getElementById('tutorialModal').style.display = show ? 'flex' : 'none';
+    }
+
+    function closeTutorial(e) {
+        if (e.target.classList.contains('modal-overlay')) {
+            toggleModal(false);
+        }
     }
 </script>
 
