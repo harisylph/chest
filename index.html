@@ -6,7 +6,7 @@
     <title>Sylphiette's cmds pack</title>
     <style>
         :root {
-            --bg-color: #f4fbf7;
+            --bg-color: #e8f0eb; /* Tối hơn 5% so với cũ */
             --card-bg: #ffffff;
             --border-color: #cbd5e1;
             --text-main: #0f172a;
@@ -14,19 +14,34 @@
             --accent: #15803d;
             --code-text: #14532d;
             --code-bg: #f0fdf4;
+            --control-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #031e0f;
+            --card-bg: #0f172a;
+            --border-color: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22c55e;
+            --code-text: #4ade80;
+            --code-bg: #022c22;
+            --control-bg: #0f172a;
         }
 
         body {
             background-color: var(--bg-color);
-            /* Họa tiết SVG tĩnh, không có animation chuyển màu -> Siêu nhẹ */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 40px 20px 80px 20px;
             display: flex;
             justify-content: center;
             zoom: 110%; /* Giữ nguyên 110% */
+            min-height: 100vh;
+            box-sizing: border-box;
+            position: relative;
         }
 
         .container {
@@ -43,8 +58,8 @@
             display: flex;
             align-items: center;
             position: relative;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
         
         .user-info {
@@ -65,7 +80,7 @@
         .username {
             font-size: 19px;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--text-main);
             white-space: nowrap;
         }
 
@@ -77,7 +92,7 @@
         }
         .nav-btn {
             background-color: #e2e8f0;
-            color: var(--text-main);
+            color: #0f172a;
             border: none;
             padding: 8px 22px;
             border-radius: 8px;
@@ -88,10 +103,41 @@
         .nav-btn.active, .nav-btn:hover {
             background-color: var(--accent) !important;
             color: #ffffff !important;
-            box-shadow: 0 3px 8px rgba(21, 128, 61, 0.3);
+        }
+
+        /* Control Bar: Search & Dark Mode */
+        .control-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .theme-btn {
+            background-color: var(--control-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13.5px;
+            white-space: nowrap;
+        }
+        .search-input {
+            flex: 1;
+            background-color: var(--control-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
         }
         
-        /* Sections & Cards */
+        /* Cards */
         .section {
             display: none;
         }
@@ -112,14 +158,14 @@
         .card-title {
             font-size: 16px;
             font-weight: 700;
-            color: #0f172a;
+            color: var(--text-main);
             margin-bottom: 8px;
         }
         .code-wrapper {
             display: flex;
             align-items: center;
             background-color: var(--code-bg);
-            border: 1px solid #bbf7d0;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 10px 14px;
             margin: 8px 0;
@@ -128,13 +174,13 @@
         code {
             color: var(--code-text);
             font-family: Consolas, Monaco, monospace;
-            font-size: 14.5px;
+            font-size: 14px;
             font-weight: 600;
             word-break: break-all;
         }
         .copy-btn {
             background-color: #e2e8f0;
-            color: var(--text-main);
+            color: #0f172a;
             border: none;
             padding: 6px 14px;
             border-radius: 6px;
@@ -152,30 +198,31 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--text-muted);
             margin-top: 6px;
         }
-        .tutorial-btn {
+        .guide-btn {
             color: #ea580c;
             background-color: #ffedd5;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
             font-weight: 700;
             font-size: 12px;
             cursor: pointer;
+            border: none;
         }
-        .tutorial-btn:hover {
+        .guide-btn:hover {
             background-color: #ea580c;
             color: #ffffff;
         }
 
-        /* Modal Popup với hiệu ứng Trượt Từ Trên Xuống (Slide Down) */
+        /* Modal Overlay & Box (Centered) */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.5);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -184,48 +231,105 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 22px;
+            padding: 24px;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            animation: slideDown 0.2s ease-out forwards;
+            max-width: 550px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .modal-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 12px;
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
         }
         .close-btn {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--text-muted);
         }
-        .tutorial-list {
-            padding-left: 18px;
-            margin: 0;
+        .page-content {
+            display: none;
             font-size: 13.5px;
-            color: var(--text-main);
             line-height: 1.6;
+            color: var(--text-main);
         }
-        .tutorial-list li {
-            margin-bottom: 8px;
+        .page-content.active {
+            display: block;
+        }
+        .guide-item {
+            margin-bottom: 12px;
+        }
+        .guide-item b {
+            color: var(--accent);
+        }
+        
+        /* Modal Pagination Footer */
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+        .page-btn {
+            background-color: #e2e8f0;
+            color: #0f172a;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
-        @keyframes slideDown {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        /* Fixed Language Selector Bar (Bottom Left) */
+        .lang-selector {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .lang-btn.active {
+            color: #ffffff;
+            background-color: var(--accent);
         }
     </style>
 </head>
@@ -244,6 +348,12 @@
         </div>
     </div>
 
+    <!-- Control Bar: Dark Mode + Search -->
+    <div class="control-bar">
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search commands..." onkeyup="filterCommands()">
+    </div>
+
     <!-- TAB CMDs -->
     <div id="cmds" class="section">
         <div class="card">
@@ -253,7 +363,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
+                <span class="note-text">Note: Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
             </div>
         </div>
 
@@ -264,7 +374,29 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
+                <span class="note-text">Note: Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Enable Ultimate Performance Power Plan</div>
+            <div class="code-wrapper">
+                <code>powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text">Note: Unlocks the hidden maximum performance power scheme for Windows.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Re-register All Default Windows Apps</div>
+            <div class="code-wrapper">
+                <code>Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text">Note: Fixes broken or crashing Microsoft Store UWP apps.</span>
             </div>
         </div>
 
@@ -275,18 +407,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Deep scan and repair corrupted Windows system files.</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">Kill Process by Port</div>
-            <div class="code-wrapper">
-                <code>netstat -ano | findstr :8080</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-            </div>
-            <div class="note-bar">
-                <span>Note: Find PID occupying port 8080 to terminate it.</span>
+                <span class="note-text">Note: Deep scan and repair corrupted Windows system files.</span>
             </div>
         </div>
 
@@ -297,7 +418,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Clear local DNS cache to fix network connection glitches.</span>
+                <span class="note-text">Note: Clear local DNS cache to fix network connection glitches.</span>
             </div>
         </div>
     </div>
@@ -311,8 +432,8 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Run directly in PowerShell to activate Windows and Office.</span>
-                <span class="tutorial-btn" onclick="openTutorial()">Tutorial</span>
+                <span class="note-text">Note: Run directly in PowerShell to activate Windows and Office.</span>
+                <button class="guide-btn" onclick="openGuide()">Guide</button>
             </div>
         </div>
 
@@ -323,7 +444,18 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Automatic adblocker and cleanup patch for Spotify Desktop app.</span>
+                <span class="note-text">Note: Automatic adblocker and cleanup patch for Spotify Desktop app.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Reset & Fix Windows Update Tool</div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://raw.githubusercontent.com/wureset/script/main/wureset.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text">Note: Completely resets Windows Update components to fix stuck updates.</span>
             </div>
         </div>
 
@@ -334,7 +466,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Remove unwanted pre-installed UWP bloatware apps safely.</span>
+                <span class="note-text">Note: Remove unwanted pre-installed UWP bloatware apps safely.</span>
             </div>
         </div>
 
@@ -345,7 +477,7 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Command-line installer for Windows without admin prompts.</span>
+                <span class="note-text">Note: Command-line installer for Windows without admin prompts.</span>
             </div>
         </div>
 
@@ -356,35 +488,79 @@
                 <button class="copy-btn" onclick="copyCode(this)">Copy</button>
             </div>
             <div class="note-bar">
-                <span>Note: Allow running local unsigned PowerShell scripts.</span>
+                <span class="note-text">Note: Allow running local unsigned PowerShell scripts.</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Popup Tutorial Trượt Từ Trên Xuống -->
-<div id="tutorialModal" class="modal-overlay" onclick="closeTutorial(event)">
+<!-- Modal Guide với Pagination (Page 1 & Page 2) -->
+<div id="guideModal" class="modal-overlay" onclick="closeGuideOnOverlay(event)">
     <div class="modal-box">
-        <div class="modal-title">
-            <span>MAS Activation Tutorial</span>
-            <button class="close-btn" onclick="toggleModal(false)">✕</button>
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">Massgrave (MAS) Complete Guide</span>
+            <button class="close-btn" onclick="toggleGuide(false)">✕</button>
         </div>
-        <ol class="tutorial-list">
-            <li><b>HWID:</b> Bấm phím 1 để kích hoạt bản quyền kỹ thuật số vĩnh viễn cho Windows 10/11 (Gắn liền với Mainboard).</li>
-            <li><b>Ohook:</b> Bấm phím 2 để kích hoạt vĩnh viễn Microsoft Office (Office 2016-2024 / M365).</li>
-            <li><b>KMS38:</b> Bấm phím 3 để kích hoạt Windows Server / Enterprise tới năm 2038.</li>
-            <li><b>Online KMS:</b> Bấm phím 4 để kích hoạt tạm thời 180 ngày cho các bản Win/Office cũ.</li>
-        </ol>
+
+        <!-- Page 1 -->
+        <div id="page1" class="page-content active">
+            <div class="guide-item">
+                <b>[1] HWID Activation:</b> Permanent digital activation for Windows 10/11. Linked directly to your motherboard Hardware ID.
+            </div>
+            <div class="guide-item">
+                <b>[2] Ohook Activation:</b> Permanent activation method for Microsoft Office (Office 2016-2024 & Microsoft 365).
+            </div>
+            <div class="guide-item">
+                <b>[3] KMS38 Activation:</b> Activates Windows Server and Enterprise editions until the year 2038.
+            </div>
+            <div class="guide-item">
+                <b>[4] Online KMS:</b> Temporary 180-day activation renewal method for legacy Windows/Office editions.
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div id="page2" class="page-content">
+            <div class="guide-item">
+                <b>[5] Check Activation Status:</b> Displays detailed license information and status for Windows & Office.
+            </div>
+            <div class="guide-item">
+                <b>[6] Troubleshoot / Fix Errors:</b> Clears corrupt KMS tokens, resets registry permissions, and repairs activation service.
+            </div>
+            <div class="guide-item">
+                <b>[7] Change Windows Edition:</b> Allows switching Windows editions on the fly (e.g., Home to Pro, Enterprise to Pro).
+            </div>
+            <div class="guide-item">
+                <b>[8] Extract OEM Key:</b> Retrieves original Windows product key embedded inside motherboard BIOS.
+            </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="modal-footer">
+            <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>◀ Prev</button>
+            <span class="page-indicator" id="pageIndicator">Page 1 of 2</span>
+            <button class="page-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+        </div>
     </div>
 </div>
 
+<!-- Fixed Language Selector -->
+<div class="lang-selector">
+    🌐
+    <button class="lang-btn active" id="langEn" onclick="setLanguage('en')">EN</button>
+    <button class="lang-btn" id="langVi" onclick="setLanguage('vi')">VI</button>
+</div>
+
 <script>
+    let currentPage = 1;
+    let currentLang = 'en';
+
     function switchTab(tabId, btn) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         
         document.getElementById(tabId).classList.add('active');
         btn.classList.add('active');
+        filterCommands();
     }
 
     function copyCode(btn) {
@@ -401,17 +577,84 @@
         });
     }
 
-    function openTutorial() {
-        document.getElementById('tutorialModal').style.display = 'flex';
+    function filterCommands() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const activeSection = document.querySelector('.section.active');
+        const cards = activeSection.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const title = card.querySelector('.card-title').innerText.toLowerCase();
+            const code = card.querySelector('code').innerText.toLowerCase();
+            const note = card.querySelector('.note-bar').innerText.toLowerCase();
+
+            if (title.includes(query) || code.includes(query) || note.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 
-    function toggleModal(show) {
-        document.getElementById('tutorialModal').style.display = show ? 'flex' : 'none';
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.getElementById('themeBtn');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            themeBtn.innerText = '🌙 Dark Mode';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.innerText = '☀️ Light Mode';
+        }
     }
 
-    function closeTutorial(e) {
+    function openGuide() {
+        currentPage = 1;
+        updatePagination();
+        toggleGuide(true);
+    }
+
+    function toggleGuide(show) {
+        document.getElementById('guideModal').style.display = show ? 'flex' : 'none';
+    }
+
+    function closeGuideOnOverlay(e) {
         if (e.target.classList.contains('modal-overlay')) {
-            toggleModal(false);
+            toggleGuide(false);
+        }
+    }
+
+    function changePage(direction) {
+        currentPage += direction;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > 2) currentPage = 2;
+        updatePagination();
+    }
+
+    function updatePagination() {
+        document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+        document.getElementById(`page${currentPage}`).classList.add('active');
+
+        document.getElementById('prevBtn').disabled = (currentPage === 1);
+        document.getElementById('nextBtn').disabled = (currentPage === 2);
+        document.getElementById('pageIndicator').innerText = `Page ${currentPage} of 2`;
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.getElementById('langEn').classList.toggle('active', lang === 'en');
+        document.getElementById('langVi').classList.toggle('active', lang === 'vi');
+
+        const searchInput = document.getElementById('searchInput');
+        const themeBtn = document.getElementById('themeBtn');
+
+        if (lang === 'vi') {
+            searchInput.placeholder = "🔍 Tìm kiếm lệnh...";
+            themeBtn.innerText = document.body.getAttribute('data-theme') === 'dark' ? '☀️ Chế độ Tối' : '🌙 Chế độ Sáng';
+            document.getElementById('modalTitle').innerText = "Hướng dẫn đầy đủ Massgrave (MAS)";
+        } else {
+            searchInput.placeholder = "🔍 Search commands...";
+            themeBtn.innerText = document.body.getAttribute('data-theme') === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+            document.getElementById('modalTitle').innerText = "Massgrave (MAS) Complete Guide";
         }
     }
 </script>
