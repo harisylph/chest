@@ -46,7 +46,6 @@
 
         body {
             background-color: var(--bg-color);
-            /* Ultra-lightweight static SVG leaf/cross pattern */
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -54,7 +53,7 @@
             padding: 40px 20px 90px 20px;
             display: flex;
             justify-content: center;
-            zoom: 110%; /* Preferred 110% zoom */
+            zoom: 110%;
             min-height: 100vh;
             position: relative;
         }
@@ -64,7 +63,6 @@
             max-width: 920px;
         }
 
-        /* */
         /* Header Box */
         .header-box {
             background-color: var(--card-bg);
@@ -150,7 +148,7 @@
             border-color: var(--accent) !important;
         }
 
-        /* Control Bar (Search + Fun Toggle) */
+        /* Control Bar */
         .control-bar {
             display: flex;
             gap: 10px;
@@ -198,7 +196,6 @@
             border-color: var(--accent);
         }
 
-        /* */
         /* Section and Cards */
         .section {
             display: none;
@@ -347,8 +344,7 @@
             color: #ffffff;
         }
 
-        /* */
-        /* Modal Overlay & Box (Centered) */
+        /* Modal Overlay & Box */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -435,7 +431,6 @@
             margin-right: 4px;
         }
 
-        /* Modal Pagination Footer */
         .modal-footer {
             display: flex;
             justify-content: space-between;
@@ -473,7 +468,6 @@
             color: var(--text-muted);
         }
 
-        /* Fixed Language Selector Box (Entire Box Clickable) */
         .lang-selector-box {
             position: fixed;
             bottom: 20px;
@@ -504,7 +498,7 @@
             font-weight: 700;
             padding: 3px 8px;
             border-radius: 6px;
-            pointer-events: none; /* Allows box parent click */
+            pointer-events: none;
         }
 
         .lang-btn.active {
@@ -541,7 +535,7 @@
         </div>
     </div>
 
-    <!-- Control Bar (Fun Toggle + Search Input) -->
+    <!-- Control Bar -->
     <div class="control-bar">
         <button class="fun-toggle-btn" id="funToggleBtn" onclick="toggleFunMode()">
             <span>✨</span> <span id="funBtnLabel">Fun Commands</span>
@@ -551,7 +545,6 @@
 
     <!-- TAB CMDs -->
     <div id="cmds" class="section active">
-        <!-- Useful Commands -->
         <div class="card useful-card">
             <div class="card-header-line">
                 <span class="card-title" data-en="ChrisTitus Tech Windows Utility" data-vi="Công Cụ Tối Ưu Windows ChrisTitus">ChrisTitus Tech Windows Utility</span>
@@ -693,7 +686,6 @@
 
     <!-- TAB PS (PowerShell) -->
     <div id="ps" class="section">
-        <!-- Useful Commands -->
         <div class="card useful-card">
             <div class="card-header-line">
                 <span class="card-title" data-en="Universal Activation Script (Massgrave MAS)" data-vi="Kích Hoạt Windows & Office (Massgrave MAS)">Universal Activation Script (Massgrave MAS)</span>
@@ -831,7 +823,7 @@
     </div>
 </div>
 
-<!-- Modal Guide with Pagination (Page 1 & Page 2) -->
+<!-- Modal Guide -->
 <div id="guideModal" class="modal-overlay" onclick="closeGuideOnOverlay(event)">
     <div class="modal-box">
         <div class="modal-header">
@@ -839,7 +831,6 @@
             <button class="close-btn" onclick="toggleGuide(false)">✕</button>
         </div>
 
-        <!-- Page 1 Content -->
         <div id="page1" class="page-content active">
             <div class="guide-item">
                 <b>[1] HWID Activation:</b>
@@ -859,7 +850,6 @@
             </div>
         </div>
 
-        <!-- Page 2 Content -->
         <div id="page2" class="page-content">
             <div class="guide-item">
                 <b>[5] Check Activation Status:</b>
@@ -879,7 +869,6 @@
             </div>
         </div>
 
-        <!-- Pagination Bar -->
         <div class="modal-footer">
             <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled data-en="◀ Prev" data-vi="◀ Trước">◀ Prev</button>
             <span class="page-indicator" id="pageIndicator" data-en="Page 1 of 2" data-vi="Trang 1 / 2">Page 1 of 2</span>
@@ -888,7 +877,7 @@
     </div>
 </div>
 
-<!-- Fixed Bottom-Left Language Switcher Container (Whole box clickable) -->
+<!-- Fixed Language Switcher Container -->
 <div class="lang-selector-box" id="langBox" onclick="toggleLanguageBox()" title="Click anywhere to toggle language">
     🌐
     <button class="lang-btn active" id="langEnBtn">EN</button>
@@ -900,7 +889,6 @@
     let funModeActive = false;
     let currentPage = 1;
 
-    // Tab Switching
     function switchTab(tabId, btn) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -910,13 +898,11 @@
         filterCommands();
     }
 
-    // Fun Mode Toggle
     function toggleFunMode() {
         funModeActive = !funModeActive;
         const funToggleBtn = document.getElementById('funToggleBtn');
         funToggleBtn.classList.toggle('active', funModeActive);
 
-        // Update cards visibility inside active tab
         const activeSection = document.querySelector('.section.active');
         const funCards = activeSection.querySelectorAll('.fun-card');
         funCards.forEach(card => {
@@ -926,11 +912,9 @@
         filterCommands();
     }
 
-    // Copying code text
     function copyCode(btn) {
         const codeText = btn.previousElementSibling.innerText;
         
-        // Executive fallback copy for iFrame sandbox compatibility
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(codeText);
         } else {
@@ -955,7 +939,6 @@
         }, 1500);
     }
 
-    // Search Filtering
     function filterCommands() {
         const query = document.getElementById('searchInput').value.toLowerCase().trim();
         const activeSection = document.querySelector('.section.active');
@@ -965,7 +948,6 @@
         cards.forEach(card => {
             const isFunCard = card.classList.contains('fun-card');
             
-            // Hide fun cards if fun mode is off
             if (isFunCard && !funModeActive) {
                 card.style.display = 'none';
                 return;
@@ -987,7 +969,6 @@
         emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
     }
 
-    // Theme Toggle
     function toggleTheme() {
         const body = document.body;
         const themeIcon = document.getElementById('themeIcon');
@@ -1004,27 +985,22 @@
         }
     }
 
-    // Language Toggle via whole box click
     function toggleLanguageBox() {
         currentLang = currentLang === 'en' ? 'vi' : 'en';
         applyLanguage();
     }
 
-    // Comprehensive Bilingual Translation Applicator
     function applyLanguage() {
         document.getElementById('langEnBtn').classList.toggle('active', currentLang === 'en');
         document.getElementById('langViBtn').classList.toggle('active', currentLang === 'vi');
 
-        // Translate elements with data-en & data-vi attributes
         document.querySelectorAll('[data-en][data-vi]').forEach(el => {
             el.innerText = el.getAttribute(`data-${currentLang}`);
         });
 
-        // Translate inputs
         const searchInput = document.getElementById('searchInput');
         searchInput.placeholder = currentLang === 'vi' ? "🔍 Tìm kiếm lệnh..." : "🔍 Search commands...";
 
-        // Translate theme toggle button text
         const isDark = document.body.getAttribute('data-theme') === 'dark';
         const themeLabel = document.getElementById('themeLabel');
         if (isDark) {
@@ -1033,7 +1009,6 @@
             themeLabel.innerText = currentLang === 'vi' ? 'Chế độ Sáng' : 'Dark Mode';
         }
 
-        // Translate Fun button text label
         const funBtnLabel = document.getElementById('funBtnLabel');
         funBtnLabel.innerText = currentLang === 'vi' ? 'Lệnh Vui Nhộn' : 'Fun Commands';
 
@@ -1041,7 +1016,6 @@
         filterCommands();
     }
 
-    // Guide Modal
     function openGuide() {
         currentPage = 1;
         updatePaginationText();
@@ -1076,7 +1050,6 @@
         pageIndicator.innerText = currentLang === 'vi' ? `Trang ${currentPage} / 2` : `Page ${currentPage} of 2`;
     }
 
-    // Initialize on window load
     window.onload = function() {
         applyLanguage();
     };
