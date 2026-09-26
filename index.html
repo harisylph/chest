@@ -24,7 +24,7 @@
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            zoom: 115%; /* Giảm 10% còn 115% */
+            zoom: 110%; /* Giảm tiếp 5% còn 110% */
         }
 
         .container {
@@ -247,6 +247,39 @@
     <!-- TAB CMDs -->
     <div id="cmds" class="section">
         <div class="card">
+            <div class="card-title">ChrisTitus Tech Windows Utility</div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://christitus.com/win | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Restore Classic Right-Click Menu (Win 11)</div>
+            <div class="code-wrapper">
+                <code>reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Repair System Files & Image</div>
+            <div class="code-wrapper">
+                <code>sfc /scannow && DISM /Online /Cleanup-Image /RestoreHealth</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Deep scan and repair corrupted Windows system files.</span>
+            </div>
+        </div>
+
+        <div class="card">
             <div class="card-title">Kill Process by Port</div>
             <div class="code-wrapper">
                 <code>netstat -ano | findstr :8080</code>
@@ -280,6 +313,39 @@
             <div class="note-bar">
                 <span>Note: Run directly in PowerShell to activate Windows and Office.</span>
                 <span class="tutorial-btn" onclick="openTutorial()">Tutorial</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Block Spotify Ads (SpotX)</div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://raw.githubusercontent.com/SpotX-Official/SpotX/main/Install.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Automatic adblocker and cleanup patch for Spotify Desktop app.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Windows 10/11 Debloater Script</div>
+            <div class="code-wrapper">
+                <code>iwr -useb https://git.io/debloat | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Remove unwanted pre-installed UWP bloatware apps safely.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Install Scoop Package Manager</div>
+            <div class="code-wrapper">
+                <code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser; iwr -useb get.scoop.sh | invoke-expression</code>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span>Note: Command-line installer for Windows (like brew/apt) without admin prompts.</span>
             </div>
         </div>
 
