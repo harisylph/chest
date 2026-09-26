@@ -11,7 +11,7 @@
             --border-color: #cbd5e1;
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --accent: #15803d; /* Green đậm chuẩn đẹp */
+            --accent: #15803d; /* Xanh lá cây đậm */
             --code-text: #166534;
             --code-bg: #f0fdf4;
         }
@@ -24,7 +24,7 @@
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            zoom: 125%; /* Phóng to toàn bộ giao diện lên 125% */
+            zoom: 125%; /* Phóng to toàn bộ giao diện 125% */
         }
 
         .container {
@@ -40,34 +40,39 @@
             padding: 16px 24px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            position: relative; /* Dùng để căn giữa absolute */
             margin-bottom: 25px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
+        
+        /* Căn giữa tuyệt đối cho Avatar + Tên */
         .user-info {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 16px;
-            flex: 1;
-            justify-content: center; /* Căn giữa thông tin Sylphiette */
-            margin-left: 110px; /* Bù trừ khoảng cách với cụm nút để căn giữa tuyệt đối */
+            gap: 12px;
         }
         .avatar {
-            width: 55px;
-            height: 55px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--accent);
         }
         .username {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             color: #0f172a;
+            white-space: nowrap;
         }
 
         .nav-buttons {
             display: flex;
             gap: 10px;
+            margin-left: auto; /* Đẩy cụm nút sang sát bên phải */
+            z-index: 2;
         }
         .nav-btn {
             background-color: #e2e8f0;
@@ -81,8 +86,8 @@
             transition: all 0.2s ease;
         }
         .nav-btn.active, .nav-btn:hover {
-            background-color: var(--accent);
-            color: #ffffff;
+            background-color: var(--accent) !important;
+            color: #ffffff !important;
             box-shadow: 0 3px 8px rgba(21, 128, 61, 0.3);
         }
         
