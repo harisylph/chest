@@ -6,62 +6,102 @@
     <title>Sylphiette's cmds pack</title>
     <style>
         :root {
-            --bg-color: #e8f0eb; /* Tối hơn 5% so với cũ */
+            /* Light theme - 5% darker background for reduced eye fatigue */
+            --bg-color: #e4ebe6; 
             --card-bg: #ffffff;
             --border-color: #cbd5e1;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --accent: #15803d;
+            --accent-hover: #166534;
             --code-text: #14532d;
             --code-bg: #f0fdf4;
             --control-bg: #ffffff;
+            --badge-fun-bg: #fef3c7;
+            --badge-fun-text: #b45309;
+            --modal-overlay: rgba(15, 23, 42, 0.55);
         }
 
         [data-theme="dark"] {
+            /* Dark theme colors */
             --bg-color: #031e0f;
             --card-bg: #0f172a;
             --border-color: #1e293b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #22c55e;
+            --accent-hover: #15803d;
             --code-text: #4ade80;
             --code-bg: #022c22;
             --control-bg: #0f172a;
+            --badge-fun-bg: #78350f;
+            --badge-fun-text: #fef3c7;
+            --modal-overlay: rgba(0, 0, 0, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            /* Ultra-lightweight static SVG leaf/cross pattern */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2315803d' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3Cpath d='M25 10c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 4 9 9zm20 30c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 40px 20px 80px 20px;
+            padding: 40px 20px 90px 20px;
             display: flex;
             justify-content: center;
-            zoom: 110%; /* Giữ nguyên 110% */
+            zoom: 110%; /* Preferred 110% zoom */
             min-height: 100vh;
-            box-sizing: border-box;
             position: relative;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 920px;
         }
-        
+
+        /* */
         /* Header Box */
         .header-box {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 16px 24px;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
-        
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .theme-toggle-btn:hover {
+            border-color: var(--accent);
+        }
+
         .user-info {
             position: absolute;
             left: 50%;
@@ -69,16 +109,19 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            pointer-events: none;
         }
+
         .avatar {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--accent);
         }
+
         .username {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-main);
             white-space: nowrap;
@@ -86,43 +129,60 @@
 
         .nav-buttons {
             display: flex;
-            gap: 10px;
-            margin-left: auto;
+            gap: 8px;
             z-index: 2;
         }
+
         .nav-btn {
-            background-color: #e2e8f0;
-            color: #0f172a;
-            border: none;
-            padding: 8px 22px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
         }
+
         .nav-btn.active, .nav-btn:hover {
             background-color: var(--accent) !important;
             color: #ffffff !important;
+            border-color: var(--accent) !important;
         }
 
-        /* Control Bar: Search & Dark Mode */
+        /* Control Bar (Search + Fun Toggle) */
         .control-bar {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
             align-items: center;
         }
-        .theme-btn {
+
+        .fun-toggle-btn {
             background-color: var(--control-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 10px 16px;
             border-radius: 10px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             font-size: 13.5px;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
+        .fun-toggle-btn:hover {
+            border-color: #f59e0b;
+        }
+
+        .fun-toggle-btn.active {
+            background-color: #f59e0b;
+            color: #ffffff;
+            border-color: #d97706;
+        }
+
         .search-input {
             flex: 1;
             background-color: var(--control-bg);
@@ -133,17 +193,20 @@
             font-size: 14px;
             outline: none;
         }
+
         .search-input:focus {
             border-color: var(--accent);
         }
-        
-        /* Cards */
+
+        /* */
+        /* Section and Cards */
         .section {
             display: none;
         }
         .section.active {
             display: block;
         }
+
         .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -151,16 +214,41 @@
             padding: 18px 22px;
             margin-bottom: 14px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            position: relative;
         }
+
         .card:hover {
             border-color: var(--accent);
         }
+
+        .card.fun-card {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .card-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
         .card-title {
             font-size: 16px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 8px;
         }
+
+        .fun-badge {
+            background-color: var(--badge-fun-bg);
+            color: var(--badge-fun-text);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .code-wrapper {
             display: flex;
             align-items: center;
@@ -170,38 +258,57 @@
             padding: 10px 14px;
             margin: 8px 0;
             justify-content: space-between;
+            gap: 10px;
         }
+
         code {
             color: var(--code-text);
-            font-family: Consolas, Monaco, monospace;
-            font-size: 14px;
+            font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+            font-size: 13.5px;
             font-weight: 600;
             word-break: break-all;
         }
+
         .copy-btn {
-            background-color: #e2e8f0;
-            color: #0f172a;
-            border: none;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
             padding: 6px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
             white-space: nowrap;
-            margin-left: 12px;
         }
+
         .copy-btn:hover {
             background-color: var(--accent);
-            color: white;
+            color: #ffffff;
+            border-color: var(--accent);
         }
+
         .note-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 13px;
             color: var(--text-muted);
-            margin-top: 6px;
+            margin-top: 8px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
+
+        .note-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
         .guide-btn {
             color: #ea580c;
             background-color: #ffedd5;
@@ -211,67 +318,123 @@
             font-size: 12px;
             cursor: pointer;
             border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .guide-btn:hover {
             background-color: #ea580c;
             color: #ffffff;
         }
 
+        .link-btn {
+            color: #2563eb;
+            background-color: #dbeafe;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .link-btn:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        /* */
         /* Modal Overlay & Box (Centered) */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--modal-overlay);
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
+
         .modal-box {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 24px;
-            width: 90%;
-            max-width: 550px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 580px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideDown 0.2s ease-out forwards;
         }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-15px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
+
         .modal-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
             color: var(--text-main);
         }
+
         .close-btn {
             background: none;
             border: none;
             font-size: 20px;
             cursor: pointer;
             color: var(--text-muted);
+            padding: 0 4px;
         }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
         .page-content {
             display: none;
             font-size: 13.5px;
             line-height: 1.6;
             color: var(--text-main);
         }
+
         .page-content.active {
             display: block;
         }
+
         .guide-item {
             margin-bottom: 12px;
+            background-color: var(--code-bg);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
         }
+
         .guide-item b {
             color: var(--accent);
+            display: inline-block;
+            margin-right: 4px;
         }
-        
+
         /* Modal Pagination Footer */
         .modal-footer {
             display: flex;
@@ -281,279 +444,463 @@
             padding-top: 12px;
             border-top: 1px solid var(--border-color);
         }
+
         .page-btn {
-            background-color: #e2e8f0;
-            color: #0f172a;
-            border: none;
-            padding: 6px 14px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 16px;
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
             font-size: 13px;
         }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
         .page-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
+
         .page-indicator {
             font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
         }
 
-        /* Fixed Language Selector Bar (Bottom Left) */
-        .lang-selector {
+        /* Fixed Language Selector Box (Entire Box Clickable) */
+        .lang-selector-box {
             position: fixed;
             bottom: 20px;
             left: 20px;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 6px 10px;
+            border-radius: 10px;
+            padding: 8px 12px;
             display: flex;
             gap: 8px;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
             z-index: 100;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
+            cursor: pointer;
+            user-select: none;
         }
+
+        .lang-selector-box:hover {
+            border-color: var(--accent);
+        }
+
         .lang-btn {
             background: none;
             border: none;
             color: var(--text-muted);
-            cursor: pointer;
             font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            pointer-events: none; /* Allows box parent click */
         }
+
         .lang-btn.active {
             color: #ffffff;
             background-color: var(--accent);
+        }
+
+        .empty-msg {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Header bar -->
+    <!-- Top Header Bar -->
     <div class="header-box">
+        <div class="header-left">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">
+                <span id="themeIcon">🌙</span> <span id="themeLabel">Dark Mode</span>
+            </button>
+        </div>
         <div class="user-info">
-            <img src="sylphie.png" alt="Sylphiette" class="avatar">
+            <img src="sylphie.png" alt="Sylphiette" class="avatar" onerror="this.src='https://placehold.co/100/15803d/ffffff?text=Sylph'">
             <span class="username">Sylphiette's cmds pack</span>
         </div>
         <div class="nav-buttons">
-            <button class="nav-btn" onclick="switchTab('cmds', this)">CMDs</button>
-            <button class="nav-btn active" onclick="switchTab('ps', this)">PS</button>
+            <button class="nav-btn active" onclick="switchTab('cmds', this)">CMDs</button>
+            <button class="nav-btn" onclick="switchTab('ps', this)">PS</button>
         </div>
     </div>
 
-    <!-- Control Bar: Dark Mode + Search -->
+    <!-- Control Bar (Fun Toggle + Search Input) -->
     <div class="control-bar">
-        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+        <button class="fun-toggle-btn" id="funToggleBtn" onclick="toggleFunMode()">
+            <span>✨</span> <span id="funBtnLabel">Fun Commands</span>
+        </button>
         <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search commands..." onkeyup="filterCommands()">
     </div>
 
     <!-- TAB CMDs -->
-    <div id="cmds" class="section">
-        <div class="card">
-            <div class="card-title">ChrisTitus Tech Windows Utility</div>
+    <div id="cmds" class="section active">
+        <!-- Useful Commands -->
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="ChrisTitus Tech Windows Utility" data-vi="Công Cụ Tối Ưu Windows ChrisTitus">ChrisTitus Tech Windows Utility</span>
+            </div>
             <div class="code-wrapper">
                 <code>iwr -useb https://christitus.com/win | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
+                <span class="note-text" data-en="Ultimate tool for debloating, tweaks, and installing apps on Windows." data-vi="Công cụ toàn năng để gỡ bloatware, tối ưu hệ thống và cài ứng dụng.">Ultimate tool for debloating, tweaks, and installing apps on Windows.</span>
+                <div class="action-btns">
+                    <a href="https://christitus.com/windows-tool/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Restore Classic Right-Click Menu (Win 11)</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Restore Classic Right-Click Menu (Win 11)" data-vi="Khôi Phục Menu Chuột Phải Cổ Điển (Win 11)">Restore Classic Right-Click Menu (Win 11)</span>
+            </div>
             <div class="code-wrapper">
                 <code>reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
+                <span class="note-text" data-en="Bring back full legacy context menu in Windows 11 (Restart Explorer to apply)." data-vi="Hiện lại menu chuột phải kiểu cũ đầy đủ trong Win 11 (Cần khởi động lại Explorer).">Bring back full legacy context menu in Windows 11 (Restart Explorer to apply).</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Enable Ultimate Performance Power Plan</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Enable Ultimate Performance Power Plan" data-vi="Bật Chế Độ Hiệu Năng Cực Hạn (Ultimate Performance)">Enable Ultimate Performance Power Plan</span>
+            </div>
             <div class="code-wrapper">
                 <code>powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Unlocks the hidden maximum performance power scheme for Windows.</span>
+                <span class="note-text" data-en="Unlocks hidden maximum performance power plan for zero-lag gaming." data-vi="Mở khóa chế độ nguồn điện hiệu năng cao nhất bị ẩn để chơi game không giật lag.">Unlocks hidden maximum performance power plan for zero-lag gaming.</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Re-register All Default Windows Apps</div>
-            <div class="code-wrapper">
-                <code>Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Repair System Files & Image (SFC / DISM)" data-vi="Sửa Lỗi File Hệ Thống (SFC & DISM)">Repair System Files & Image (SFC / DISM)</span>
             </div>
-            <div class="note-bar">
-                <span class="note-text">Note: Fixes broken or crashing Microsoft Store UWP apps.</span>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">Repair System Files & Image</div>
             <div class="code-wrapper">
                 <code>sfc /scannow && DISM /Online /Cleanup-Image /RestoreHealth</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Deep scan and repair corrupted Windows system files.</span>
+                <span class="note-text" data-en="Deep scan and repair corrupted Windows system files automatically." data-vi="Quét sâu và tự động sửa chữa các file hệ thống Windows bị lỗi.">Deep scan and repair corrupted Windows system files automatically.</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Flush DNS Resolver Cache</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Batch Software Installer (Winget)" data-vi="Cài Đặt Phần Mềm Hàng Loạt (Winget)">Batch Software Installer (Winget)</span>
+            </div>
             <div class="code-wrapper">
-                <code>ipconfig /flushdns</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>winget install 7zip.7zip Google.Chrome Git.Git VideoLAN.VLC -e --accept-source-agreements</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Clear local DNS cache to fix network connection glitches.</span>
+                <span class="note-text" data-en="Installs popular core apps (7-Zip, Chrome, Git, VLC) instantly in one go." data-vi="Tự động cài nhanh bộ ứng dụng cơ bản (7-Zip, Chrome, Git, VLC) trong 1 dòng lệnh.">Installs popular core apps (7-Zip, Chrome, Git, VLC) instantly in one go.</span>
+            </div>
+        </div>
+
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Flush DNS Cache & Reset Network" data-vi="Xóa Cache DNS & Reset Mạng">Flush DNS Cache & Reset Network</span>
+            </div>
+            <div class="code-wrapper">
+                <code>ipconfig /flushdns && netsh winsock reset</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Clears stale DNS entries and resets Winsock adapter to fix connection errors." data-vi="Xóa bộ nhớ đệm DNS và reset card mạng để khắc phục lỗi không vào được web.">Clears stale DNS entries and resets Winsock adapter to fix connection errors.</span>
+            </div>
+        </div>
+
+        <!-- Fun Mode CMD Commands -->
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Matrix Green Rain Animation" data-vi="Hiệu Ứng Mưa Chữ Matrix Xanh Lá">Matrix Green Rain Animation</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>@echo off & color 02 & :x & echo %random%%random%%random%%random%%random%%random%%random% & goto x</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Turns your CMD window into a hacker-style Matrix cascading text rain!" data-vi="Biến cửa sổ CMD thành hiệu ứng mưa chữ ma trận chuẩn phong cách hacker!">Turns your CMD window into a hacker-style Matrix cascading text rain!</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Watch ASCII Star Wars Movie in CMD" data-vi="Xem Phim Star Wars Bằng Ký Tự ASCII">Watch ASCII Star Wars Movie in CMD</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>curl telehack.com && starwars</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Streams full Star Wars Episode IV movie rendered entirely in ASCII text art." data-vi="Phát trọn bộ phim Star Wars Tập IV được dựng hoàn toàn bằng chữ nghệ thuật ASCII.">Streams full Star Wars Episode IV movie rendered entirely in ASCII text art.</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Make CMD Talk (Text to Speech)" data-vi="Làm CMD Biết Nói (Giọng Đọc Chữ)">Make CMD Talk (Text to Speech)</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>mshta vbscript:Execute("CreateObject(""SAPI.SpVoice"").Speak(""Hello master Sylphiette is here"")(window.close)")</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Uses Windows built-in speech engine to read custom text out loud." data-vi="Sử dụng bộ đọc giọng nói có sẵn của Windows để phát ra âm thanh câu nói.">Uses Windows built-in speech engine to read custom text out loud.</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="CMD Color Disco Lights Loop" data-vi="Vòng Lặp Đổi Màu CMD Kiểu Đèn Disco">CMD Color Disco Lights Loop</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>@echo off & :a & color 0a & color 0b & color 0c & color 0d & color 0e & goto a</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Rapidly flashes CMD text colors to turn terminal into a party disco show." data-vi="Chớp nháy màu chữ CMD liên tục biến màn hình thành vũ trường ngập sắc màu.">Rapidly flashes CMD text colors to turn terminal into a party disco show.</span>
             </div>
         </div>
     </div>
 
     <!-- TAB PS (PowerShell) -->
-    <div id="ps" class="section active">
-        <div class="card">
-            <div class="card-title">Universal Activation Script (Massgrave)</div>
+    <div id="ps" class="section">
+        <!-- Useful Commands -->
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Universal Activation Script (Massgrave MAS)" data-vi="Kích Hoạt Windows & Office (Massgrave MAS)">Universal Activation Script (Massgrave MAS)</span>
+            </div>
             <div class="code-wrapper">
                 <code>irm https://get.activated.win | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Run directly in PowerShell to activate Windows and Office.</span>
-                <button class="guide-btn" onclick="openGuide()">Guide</button>
+                <span class="note-text" data-en="Official script to activate Windows and Microsoft Office permanently." data-vi="Script chính thức để kích hoạt bản quyền Windows và Microsoft Office vĩnh viễn.">Official script to activate Windows and Microsoft Office permanently.</span>
+                <div class="action-btns">
+                    <button class="guide-btn" onclick="openGuide()">📖 <span data-en="Guide" data-vi="Hướng dẫn">Guide</span></button>
+                    <a href="https://massgrave.dev/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Block Spotify Ads (SpotX)</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Block Spotify Desktop Ads (SpotX)" data-vi="Chặn Quảng Cáo Spotify PC (SpotX)">Block Spotify Desktop Ads (SpotX)</span>
+            </div>
             <div class="code-wrapper">
                 <code>iwr -useb https://raw.githubusercontent.com/SpotX-Official/SpotX/main/Install.ps1 | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Automatic adblocker and cleanup patch for Spotify Desktop app.</span>
+                <span class="note-text" data-en="Automatic adblocker and cleanup patch for Spotify Windows client." data-vi="Tự động chặn sạch quảng cáo và dọn dẹp ứng dụng Spotify trên Windows.">Automatic adblocker and cleanup patch for Spotify Windows client.</span>
+                <div class="action-btns">
+                    <a href="https://github.com/SpotX-Official/SpotX" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Reset & Fix Windows Update Tool</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Reset & Fix Windows Update Components" data-vi="Sửa Lỗi Windows Update (Reset WU)">Reset & Fix Windows Update Components</span>
+            </div>
             <div class="code-wrapper">
                 <code>iwr -useb https://raw.githubusercontent.com/wureset/script/main/wureset.ps1 | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Completely resets Windows Update components to fix stuck updates.</span>
+                <span class="note-text" data-en="Restores broken update services and cleans stuck update cache." data-vi="Khôi phục các dịch vụ bị lỗi và làm sạch bộ nhớ đệm cập nhật bị kẹt.">Restores broken update services and cleans stuck update cache.</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Windows 10/11 Debloater Script</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Uninstall Edge & OneDrive Bloatware" data-vi="Gỡ Bỏ Edge & OneDrive">Uninstall Edge & OneDrive Bloatware</span>
+            </div>
             <div class="code-wrapper">
-                <code>iwr -useb https://git.io/debloat | iex</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>iwr -useb https://raw.githubusercontent.com/rcmaehl/MSEdgeRedirect/main/assets/uninstall.ps1 | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Remove unwanted pre-installed UWP bloatware apps safely.</span>
+                <span class="note-text" data-en="Cleanly purges unwanted Microsoft Edge remnants from Windows." data-vi="Dọn dẹp sạch sẽ trình duyệt Microsoft Edge không mong muốn khỏi hệ thống.">Cleanly purges unwanted Microsoft Edge remnants from Windows.</span>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Install Scoop Package Manager</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Install Scoop Package Manager" data-vi="Cài Đặt Bộ Quản Lý Gói Scoop">Install Scoop Package Manager</span>
+            </div>
             <div class="code-wrapper">
-                <code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser; iwr -useb get.scoop.sh | invoke-expression</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; iwr -useb get.scoop.sh | iex</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Command-line installer for Windows without admin prompts.</span>
+                <span class="note-text" data-en="Lightweight command-line app installer without requiring Admin elevation." data-vi="Trình cài đặt ứng dụng bằng dòng lệnh cực nhẹ không cần quyền Admin.">Lightweight command-line app installer without requiring Admin elevation.</span>
+                <div class="action-btns">
+                    <a href="https://scoop.sh/" target="_blank" class="link-btn" data-en="Link" data-vi="Liên kết">Link ↗</a>
+                </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-title">Bypass Execution Policy</div>
+        <div class="card useful-card">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Bypass PowerShell Execution Policy" data-vi="Mở Khóa Quyền Chạy Script PowerShell">Bypass PowerShell Execution Policy</span>
+            </div>
             <div class="code-wrapper">
-                <code>Set-ExecutionPolicy Unrestricted -Scope CurrentUser</code>
-                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
             </div>
             <div class="note-bar">
-                <span class="note-text">Note: Allow running local unsigned PowerShell scripts.</span>
+                <span class="note-text" data-en="Permits execution of custom local automation scripts without restriction errors." data-vi="Cho phép chạy các file script PowerShell tự tạo trên máy mà không bị chặn.">Permits execution of custom local automation scripts without restriction errors.</span>
+            </div>
+        </div>
+
+        <!-- Fun Mode PS Commands -->
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="ASCII Rickroll Animation Stream" data-vi="Stream Rickroll Bằng Ký Tự ASCII">ASCII Rickroll Animation Stream</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>iex(New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/keroserene/rickroll/master/rickroll.ps1')</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Plays full animated Rick Astley video directly inside PowerShell terminal!" data-vi="Phát đoạn phim Rick Astley huyền thoại bằng ký tự chuyển động ngay trong PowerShell!">Plays full animated Rick Astley video directly inside PowerShell terminal!</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="Play Star Wars Theme Music with Motherboard Beeps" data-vi="Phát Nhạc Star Wars Bằng Tiếng Beep">Play Star Wars Theme Music with Motherboard Beeps</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>[console]::beep(440,500); [console]::beep(440,500); [console]::beep(440,500); [console]::beep(349,350); [console]::beep(523,150); [console]::beep(440,500)</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Uses hardware speaker frequencies to compose the Imperial March rhythm." data-vi="Sử dụng tần số loa phần cứng của máy tính để đánh giai điệu Star Wars.">Uses hardware speaker frequencies to compose the Imperial March rhythm.</span>
+            </div>
+        </div>
+
+        <div class="card fun-card" style="display: none;">
+            <div class="card-header-line">
+                <span class="card-title" data-en="PowerShell High-Speed Matrix Digital Rain" data-vi="Mưa Số Ma Trận Tốc Độ Cao PowerShell">PowerShell High-Speed Matrix Digital Rain</span>
+                <span class="fun-badge" data-en="Fun Mode" data-vi="Vui Nhộn">Fun Mode</span>
+            </div>
+            <div class="code-wrapper">
+                <code>$h=(Get-Host).UI.RawUI;$h.ForegroundColor='Green';while(1){Write-Host -NoNewline ([char](Get-Random -Min 33 -Max 126))}</code>
+                <button class="copy-btn" onclick="copyCode(this)" data-en="Copy" data-vi="Sao chép">Copy</button>
+            </div>
+            <div class="note-bar">
+                <span class="note-text" data-en="Generates smooth infinite stream of matrix code symbols." data-vi="Tạo dòng chảy các ký tự mã hóa xanh lá mượt mà không tận.">Generates smooth infinite stream of matrix code symbols.</span>
             </div>
         </div>
     </div>
+
+    <div id="emptyMsg" class="empty-msg" data-en="No matching commands found." data-vi="Không tìm thấy lệnh nào phù hợp.">
+        No matching commands found.
+    </div>
 </div>
 
-<!-- Modal Guide với Pagination (Page 1 & Page 2) -->
+<!-- Modal Guide with Pagination (Page 1 & Page 2) -->
 <div id="guideModal" class="modal-overlay" onclick="closeGuideOnOverlay(event)">
     <div class="modal-box">
         <div class="modal-header">
-            <span class="modal-title" id="modalTitle">Massgrave (MAS) Complete Guide</span>
+            <span class="modal-title" id="modalTitle" data-en="Massgrave (MAS) Complete Feature Guide" data-vi="Hướng Dẫn Chi Tiết Toàn Bộ Tính Năng Massgrave (MAS)">Massgrave (MAS) Complete Feature Guide</span>
             <button class="close-btn" onclick="toggleGuide(false)">✕</button>
         </div>
 
-        <!-- Page 1 -->
+        <!-- Page 1 Content -->
         <div id="page1" class="page-content active">
             <div class="guide-item">
-                <b>[1] HWID Activation:</b> Permanent digital activation for Windows 10/11. Linked directly to your motherboard Hardware ID.
+                <b>[1] HWID Activation:</b>
+                <span data-en="Permanent digital license for Windows 10/11. Permanently bound to motherboard hardware ID. Survives OS reinstallation." data-vi="Bản quyền kỹ thuật số vĩnh viễn cho Win 10/11. Gắn liền với Mainboard máy tính, cài lại Win không lo mất bản quyền.">Permanent digital license for Windows 10/11. Permanently bound to motherboard hardware ID. Survives OS reinstallation.</span>
             </div>
             <div class="guide-item">
-                <b>[2] Ohook Activation:</b> Permanent activation method for Microsoft Office (Office 2016-2024 & Microsoft 365).
+                <b>[2] Ohook Activation:</b>
+                <span data-en="Permanent activation method for Microsoft Office (Office 2016-2024 & Office 365). No product key or server required." data-vi="Kích hoạt vĩnh viễn Microsoft Office (2016-2024 & Office 365). Không cần máy chủ hay key lằng nhằng.">Permanent activation method for Microsoft Office (Office 2016-2024 & Office 365). No product key or server required.</span>
             </div>
             <div class="guide-item">
-                <b>[3] KMS38 Activation:</b> Activates Windows Server and Enterprise editions until the year 2038.
+                <b>[3] KMS38 Activation:</b>
+                <span data-en="Activates Windows Server and Enterprise LTSC editions until the year 2038 without online renewal." data-vi="Kích hoạt Windows Server và các bản Enterprise LTSC đến tận năm 2038 mà không cần gia hạn online.">Activates Windows Server and Enterprise LTSC editions until the year 2038 without online renewal.</span>
             </div>
             <div class="guide-item">
-                <b>[4] Online KMS:</b> Temporary 180-day activation renewal method for legacy Windows/Office editions.
+                <b>[4] Online KMS:</b>
+                <span data-en="180-day auto-renewing activation fallback method for older legacy Windows/Office software." data-vi="Phương pháp kích hoạt tạm thời 180 ngày (tự động gia hạn) cho các bản Win/Office đời cũ.">180-day auto-renewing activation fallback method for older legacy Windows/Office software.</span>
             </div>
         </div>
 
-        <!-- Page 2 -->
+        <!-- Page 2 Content -->
         <div id="page2" class="page-content">
             <div class="guide-item">
-                <b>[5] Check Activation Status:</b> Displays detailed license information and status for Windows & Office.
+                <b>[5] Check Activation Status:</b>
+                <span data-en="Displays comprehensive license status and expiration breakdown for Windows & Office." data-vi="Hiển thị chi tiết trạng thái bản quyền, loại license và thời hạn còn lại của Win & Office.">Displays comprehensive license status and expiration breakdown for Windows & Office.</span>
             </div>
             <div class="guide-item">
-                <b>[6] Troubleshoot / Fix Errors:</b> Clears corrupt KMS tokens, resets registry permissions, and repairs activation service.
+                <b>[6] Troubleshoot & Repair:</b>
+                <span data-en="Clears corrupted KMS tokens, resets registry permissions, and repairs activation service errors." data-vi="Dọn dẹp token KMS bị lỗi, reset quyền Registry và khắc phục các sự cố khiến không kích hoạt được.">Clears corrupted KMS tokens, resets registry permissions, and repairs activation service errors.</span>
             </div>
             <div class="guide-item">
-                <b>[7] Change Windows Edition:</b> Allows switching Windows editions on the fly (e.g., Home to Pro, Enterprise to Pro).
+                <b>[7] Change Windows Edition:</b>
+                <span data-en="Instantly upgrades/changes Windows edition without losing data (e.g. Home to Pro, Enterprise to Pro)." data-vi="Chuyển đổi trực tiếp giữa các phiên bản Windows (ví dụ: từ Home lên Pro) giữ nguyên dữ liệu.">Instantly upgrades/changes Windows edition without losing data (e.g. Home to Pro, Enterprise to Pro).</span>
             </div>
             <div class="guide-item">
-                <b>[8] Extract OEM Key:</b> Retrieves original Windows product key embedded inside motherboard BIOS.
+                <b>[8] Extract OEM / Clear KMS:</b>
+                <span data-en="Extracts original BIOS embedded OEM product key or completely cleans old KMS server residues." data-vi="Trích xuất Key gốc lưu trong BIOS máy hoặc xóa bỏ hoàn toàn các dư thừa của KMS cũ.">Extracts original BIOS embedded OEM product key or completely cleans old KMS server residues.</span>
             </div>
         </div>
 
-        <!-- Pagination Controls -->
+        <!-- Pagination Bar -->
         <div class="modal-footer">
-            <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled>◀ Prev</button>
-            <span class="page-indicator" id="pageIndicator">Page 1 of 2</span>
-            <button class="page-btn" id="nextBtn" onclick="changePage(1)">Next ▶</button>
+            <button class="page-btn" id="prevBtn" onclick="changePage(-1)" disabled data-en="◀ Prev" data-vi="◀ Trước">◀ Prev</button>
+            <span class="page-indicator" id="pageIndicator" data-en="Page 1 of 2" data-vi="Trang 1 / 2">Page 1 of 2</span>
+            <button class="page-btn" id="nextBtn" onclick="changePage(1)" data-en="Next ▶" data-vi="Tiếp ▶">Next ▶</button>
         </div>
     </div>
 </div>
 
-<!-- Fixed Language Selector -->
-<div class="lang-selector">
+<!-- Fixed Bottom-Left Language Switcher Container (Whole box clickable) -->
+<div class="lang-selector-box" id="langBox" onclick="toggleLanguageBox()" title="Click anywhere to toggle language">
     🌐
-    <button class="lang-btn active" id="langEn" onclick="setLanguage('en')">EN</button>
-    <button class="lang-btn" id="langVi" onclick="setLanguage('vi')">VI</button>
+    <button class="lang-btn active" id="langEnBtn">EN</button>
+    <button class="lang-btn" id="langViBtn">VI</button>
 </div>
 
 <script>
-    let currentPage = 1;
     let currentLang = 'en';
+    let funModeActive = false;
+    let currentPage = 1;
 
+    // Tab Switching
     function switchTab(tabId, btn) {
         document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -563,53 +910,141 @@
         filterCommands();
     }
 
-    function copyCode(btn) {
-        const codeText = btn.previousElementSibling.innerText;
-        navigator.clipboard.writeText(codeText).then(() => {
-            btn.innerText = "Copied!";
-            btn.style.backgroundColor = "#15803d";
-            btn.style.color = "#ffffff";
-            setTimeout(() => {
-                btn.innerText = "Copy";
-                btn.style.backgroundColor = "#e2e8f0";
-                btn.style.color = "#0f172a";
-            }, 1500);
+    // Fun Mode Toggle
+    function toggleFunMode() {
+        funModeActive = !funModeActive;
+        const funToggleBtn = document.getElementById('funToggleBtn');
+        funToggleBtn.classList.toggle('active', funModeActive);
+
+        // Update cards visibility inside active tab
+        const activeSection = document.querySelector('.section.active');
+        const funCards = activeSection.querySelectorAll('.fun-card');
+        funCards.forEach(card => {
+            card.style.display = funModeActive ? 'block' : 'none';
         });
+
+        filterCommands();
     }
 
+    // Copying code text
+    function copyCode(btn) {
+        const codeText = btn.previousElementSibling.innerText;
+        
+        // Executive fallback copy for iFrame sandbox compatibility
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(codeText);
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = codeText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+
+        const origEn = btn.getAttribute('data-en') || "Copy";
+        const origVi = btn.getAttribute('data-vi') || "Sao chép";
+        btn.innerText = currentLang === 'vi' ? "Đã chép!" : "Copied!";
+        btn.style.backgroundColor = "#15803d";
+        btn.style.color = "#ffffff";
+        
+        setTimeout(() => {
+            btn.innerText = currentLang === 'vi' ? origVi : origEn;
+            btn.style.backgroundColor = "";
+            btn.style.color = "";
+        }, 1500);
+    }
+
+    // Search Filtering
     function filterCommands() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
         const activeSection = document.querySelector('.section.active');
         const cards = activeSection.querySelectorAll('.card');
+        let visibleCount = 0;
 
         cards.forEach(card => {
+            const isFunCard = card.classList.contains('fun-card');
+            
+            // Hide fun cards if fun mode is off
+            if (isFunCard && !funModeActive) {
+                card.style.display = 'none';
+                return;
+            }
+
             const title = card.querySelector('.card-title').innerText.toLowerCase();
             const code = card.querySelector('code').innerText.toLowerCase();
             const note = card.querySelector('.note-bar').innerText.toLowerCase();
 
             if (title.includes(query) || code.includes(query) || note.includes(query)) {
                 card.style.display = 'block';
+                visibleCount++;
             } else {
                 card.style.display = 'none';
             }
         });
+
+        const emptyMsg = document.getElementById('emptyMsg');
+        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
     }
 
+    // Theme Toggle
     function toggleTheme() {
         const body = document.body;
-        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeLabel = document.getElementById('themeLabel');
+
         if (body.getAttribute('data-theme') === 'dark') {
             body.removeAttribute('data-theme');
-            themeBtn.innerText = '🌙 Dark Mode';
+            themeIcon.innerText = '🌙';
+            themeLabel.innerText = currentLang === 'vi' ? 'Chế độ Sáng' : 'Dark Mode';
         } else {
             body.setAttribute('data-theme', 'dark');
-            themeBtn.innerText = '☀️ Light Mode';
+            themeIcon.innerText = '☀️';
+            themeLabel.innerText = currentLang === 'vi' ? 'Chế độ Tối' : 'Light Mode';
         }
     }
 
+    // Language Toggle via whole box click
+    function toggleLanguageBox() {
+        currentLang = currentLang === 'en' ? 'vi' : 'en';
+        applyLanguage();
+    }
+
+    // Comprehensive Bilingual Translation Applicator
+    function applyLanguage() {
+        document.getElementById('langEnBtn').classList.toggle('active', currentLang === 'en');
+        document.getElementById('langViBtn').classList.toggle('active', currentLang === 'vi');
+
+        // Translate elements with data-en & data-vi attributes
+        document.querySelectorAll('[data-en][data-vi]').forEach(el => {
+            el.innerText = el.getAttribute(`data-${currentLang}`);
+        });
+
+        // Translate inputs
+        const searchInput = document.getElementById('searchInput');
+        searchInput.placeholder = currentLang === 'vi' ? "🔍 Tìm kiếm lệnh..." : "🔍 Search commands...";
+
+        // Translate theme toggle button text
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        const themeLabel = document.getElementById('themeLabel');
+        if (isDark) {
+            themeLabel.innerText = currentLang === 'vi' ? 'Chế độ Tối' : 'Light Mode';
+        } else {
+            themeLabel.innerText = currentLang === 'vi' ? 'Chế độ Sáng' : 'Dark Mode';
+        }
+
+        // Translate Fun button text label
+        const funBtnLabel = document.getElementById('funBtnLabel');
+        funBtnLabel.innerText = currentLang === 'vi' ? 'Lệnh Vui Nhộn' : 'Fun Commands';
+
+        updatePaginationText();
+        filterCommands();
+    }
+
+    // Guide Modal
     function openGuide() {
         currentPage = 1;
-        updatePagination();
+        updatePaginationText();
         toggleGuide(true);
     }
 
@@ -623,40 +1058,28 @@
         }
     }
 
-    function changePage(direction) {
-        currentPage += direction;
+    function changePage(dir) {
+        currentPage += dir;
         if (currentPage < 1) currentPage = 1;
         if (currentPage > 2) currentPage = 2;
-        updatePagination();
+        updatePaginationText();
     }
 
-    function updatePagination() {
+    function updatePaginationText() {
         document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
         document.getElementById(`page${currentPage}`).classList.add('active');
 
         document.getElementById('prevBtn').disabled = (currentPage === 1);
         document.getElementById('nextBtn').disabled = (currentPage === 2);
-        document.getElementById('pageIndicator').innerText = `Page ${currentPage} of 2`;
+        
+        const pageIndicator = document.getElementById('pageIndicator');
+        pageIndicator.innerText = currentLang === 'vi' ? `Trang ${currentPage} / 2` : `Page ${currentPage} of 2`;
     }
 
-    function setLanguage(lang) {
-        currentLang = lang;
-        document.getElementById('langEn').classList.toggle('active', lang === 'en');
-        document.getElementById('langVi').classList.toggle('active', lang === 'vi');
-
-        const searchInput = document.getElementById('searchInput');
-        const themeBtn = document.getElementById('themeBtn');
-
-        if (lang === 'vi') {
-            searchInput.placeholder = "🔍 Tìm kiếm lệnh...";
-            themeBtn.innerText = document.body.getAttribute('data-theme') === 'dark' ? '☀️ Chế độ Tối' : '🌙 Chế độ Sáng';
-            document.getElementById('modalTitle').innerText = "Hướng dẫn đầy đủ Massgrave (MAS)";
-        } else {
-            searchInput.placeholder = "🔍 Search commands...";
-            themeBtn.innerText = document.body.getAttribute('data-theme') === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-            document.getElementById('modalTitle').innerText = "Massgrave (MAS) Complete Guide";
-        }
-    }
+    // Initialize on window load
+    window.onload = function() {
+        applyLanguage();
+    };
 </script>
 
 </body>
